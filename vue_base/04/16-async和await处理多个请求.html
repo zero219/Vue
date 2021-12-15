@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../js/axios.js"></script>
+<script type="text/javascript">
+    /*
+    
+    */
+    //1.配置url 
+    axios.defaults.baseURL = 'http://localhost:3000';
+    //2.超时时间 
+    axios.defaults.timeout = 3000;
+    async function queryData() {
+        var info = await axios.get('async1');
+        var ret = await axios.get('async2?info='+info.data);
+        return ret.data;
+    }
+    queryData().then(function (data) {
+        console.log(data);
+    });
+
+
+</script>
+
+</html>

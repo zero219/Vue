@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-on:keyup.a='handle' v-model='info' />
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    //按键修饰符的名字是自定义的，但是对应的值必须和按键对应(event.keyCode)
+    Vue.config.keyCodes.a = 65;
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            info: ''
+        },
+        methods: {
+            handle: function (event) {
+                console.log(event.keyCode)
+            }
+        }
+    });
+</script>
+
+</html>

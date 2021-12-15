@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+       
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+     插槽：slot
+    */
+
+    Vue.component('base-layout', {
+        template: `
+          <div>
+          <header>
+          <slot name='header'></slot>
+          </header>
+          <main>
+          <slot></slot>
+          </main>
+          <footer>
+          <slot name='footer'></slot>
+          </footer>
+          </div>
+        `,
+    });
+
+
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+            handle: function () {
+
+            }
+        }
+    });
+</script>
+
+</html>

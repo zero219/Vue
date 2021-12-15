@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-color='msg'>
+        <input type="text" v-color1='msg1' v-focus>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    //带参数指令
+    Vue.directive('color', {
+        bind: function (event, binding) {
+            event.style.backgroundColor = binding.value.color;
+        }
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: {
+                color: 'red'
+            },
+            msg1: {
+                color: 'blue'
+            }
+        },
+        methods: {
+            handle: function (event) {
+            }
+        },
+        //局部指令
+        directives: {
+            color1: {
+                bind: function (event, binding) {
+                    event.style.backgroundColor = binding.value.color;
+                }
+            },
+            focus: {
+                inserted: function (event) {
+                    event.focus();
+                }
+            }
+        }
+    });
+</script>
+
+</html>

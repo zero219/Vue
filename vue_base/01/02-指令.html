@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style type="text/css">
+        [v-cloak] {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!--指令： v开头-->
+        <div v-cloak>{{msg}}</div>
+        <div v-text="msg1"></div>
+
+        <!-- v-html危险，容易xss攻击 -->
+        <div v-html="strhtml"></div>
+
+        <!-- v-once执行一次，如果后面结果不需要修改，就可使用，提高性能 -->
+        <div v-once>{{info}}</div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: 'Hello Word',
+            msg1: 'vue',
+            strhtml: '<h1>Hello Vue</h1>',
+            info:'Hello'
+        }
+    });
+</script>
+
+</html>

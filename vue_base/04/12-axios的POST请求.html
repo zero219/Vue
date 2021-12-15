@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../js/axios.js"></script>
+<script type="text/javascript">
+    /*
+   axios(PUT用法与POST相似)
+    */
+    //1.该写法默认是json方式传递
+    axios.post('/abc', {
+        user: 'admin',
+        pwd: '123'
+    }).then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+    //2.URLScearchParams传递参数,'application/x-www-form-urlencoded'类型
+    const params = new URLSearchParams();
+    params.append('user', 'admin');
+    params.append('pwd', '123');
+    axios.post('/abc', params).then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+</script>
+
+</html>

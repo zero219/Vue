@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../js/axios.js"></script>
+<script type="text/javascript">
+    /*
+   常用GET、SET、PUT、DELETE(DELETE用法与GET相似)
+    */
+    //1.restfull风格
+    axios.get('/abc/123').then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+    //2.url参数
+    axios.get('/abc?id=123').then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+    //3.params参数
+    axios.get('/abc', {
+        params: {
+            id: 123
+        }
+    }).then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+</script>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>{{msg}}</div>
+        <div>{{reversString}}</div>
+        <div>{{reversString}}</div>
+        <div>{{reversMessge()}}</div>
+        <div>{{reversMessge()}}</div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            msg: 'nihao'
+        },
+        methods: {
+            handle: function (event) {
+            },
+            //方法不存在缓存
+            reversMessge: function () {
+                console.log('methods');
+                return this.msg.split('').reverse().join('');
+            }
+        },
+        //计算属性:基于data数据处理,需要返回属性,计算属性存在缓存
+        computed: {
+            reversString: function () {
+                console.log('computed');
+                return this.msg.split('').reverse().join('');
+            }
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    var p = new Promise(function (resolve, reject) {
+        setTimeout(function(){
+        var flag = false;
+        if (flag) {
+            resolve("Hello");
+        } else {
+            reject('error');
+        }
+        },1000);
+    });
+    p.then(function (data) {//对应resolve方法
+        console.log(data);
+    })
+    .catch(function(data){//获取异常
+        console.log('异常了',data);
+    })
+    .finally(function(data){//成功与否都会执行
+        console.log('finished');
+    });
+</script>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <router-link to="/user/1">User1</router-link>
+        <router-link to="/user/2">User2</router-link>
+        <router-link :to="{name:user,params:{id:3}}">User3</router-link>
+        <router-link to="/register">Register</router-link>
+        <!--路由占位符-->
+        <router-view></router-view>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript" src="../js/vue-router.js"></script>
+<script type="text/javascript">
+
+    const User = {
+        //props:接收路由参数
+        props: ['id', 'name', 'age'],
+        template: `<h1>用户页面,用户id为:{{id}},名称:{{name}},年龄:{{age}}</h1>`
+    };
+    const Register = {
+        template: `
+        <div>
+        <h1>注册页面</h1>
+        </div>
+        `
+    };
+
+
+    //创建路由实例
+    const router = new VueRouter({
+        routes: [
+            {
+                //name:路由名称
+                name: 'user',
+                path: '/user/:id',
+                component: User,
+                props: route => ({ name: 'zero', age: 23, id: route.params.id })
+            },
+            { path: '/register', component: Register },
+        ]
+    });
+
+
+    const vm = new Vue({
+        //指定控制区域
+        el: '#app',
+        data: {
+
+        },
+        //挂载路由实例对象
+        router: router
+    });
+</script>
+
+</html>

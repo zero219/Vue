@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+
+<script type="text/javascript">
+    /*
+   put请求和post方式相同
+    */
+    fetch("/abc/123", {
+        method: 'post',
+        body: JSON.stringify({ uname: 'admin', pwd: "123" }),
+        headers: {
+            //参数格式
+            'Content-Type': 'application/json'
+        }
+    }).then(function (data) {
+        //json形式结果
+        return data.json();
+        //return data.text();//字符串类型
+    }).then(function (ret) {
+        console.log(ret.uname);
+        //需要Json.parse()反序列化
+        //console.log(typeof ret);//查看类型
+        //var obj=Json.parse(ret);
+        //console.log(obj.uname);
+    });
+</script>
+
+</html>

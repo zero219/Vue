@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    var p = new Promise(function (resolve, reject) {
+        var flag = true;
+        if (flag) {
+            resolve("Hello");
+        } else {
+            reject("Word");
+        }
+    });
+    p.then(function (data) {//对应resolve方法
+        console.log(data);
+    }, function (info) {//对应reject方法
+        console.log(info);
+    });
+</script>
+
+</html>

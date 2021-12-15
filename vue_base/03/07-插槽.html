@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <alert-box></alert-box>
+        <alert-box>1</alert-box>
+        <alert-box>2</alert-box>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+     插槽：slot
+    */
+    
+    Vue.component('alert-box', {
+        template: `
+           <div>
+           <strong>ERROR:</strong>
+           <slot>默认内容</slot>
+           </div>
+        `,
+    });
+
+  
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+            handle: function () {
+               
+            }
+        }
+    });
+</script>
+
+</html>

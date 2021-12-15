@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>{{pmsg}}</div>
+        <menu-item title="传进来了" content='传值呀' my-title='使用时必须加上短横线'></menu-item>
+        <menu-item :title='ptitle' content='你好' my-title='使用时必须加上短横线'></menu-item>
+        <third-item></third-item>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+    父组件向子组件传值:props接收
+    */
+    /*注：props如果是驼峰模式(myTitle),普通标签中使用时必须加上短横线,
+          但是在字符串模板中可以直接使用
+     */
+    Vue.component('menu-item', {
+        props: ['title', 'content', 'myTitle'],
+        data: function () {
+            return {
+                msg: '子组件中的内容'
+            }
+        },
+        template: '<div>{{msg+"---"+title+"---"+content+"--"+myTitle}}</div>'
+    });
+
+    Vue.component('third-item', {
+        template: '<menu-item title="ssss" content="你好"  myTitle="字符串不用"></menu-item>'
+    });
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            ptitle: '动态传值',
+            pmsg: '父组件中的内容'
+        },
+
+    });
+</script>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+    .current{
+        color: orange;
+    }
+</style>
+</head>
+
+<body>
+    <div id="app">
+        <fruit-list :list='list'>
+            <template slot-scope='slotProps'>
+                <strong v-if='slotProps.info.id==2' class='current'>{{slotProps.info.name}}</strong>
+                <strong v-else>{{slotProps.info.name}}</strong>
+            </template>
+        </fruit-list>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+     具名插槽：slot
+    */
+
+    Vue.component('fruit-list', {
+        props: ['list'],
+        template: `
+          <div>
+         <ul>
+         <li v-for="item in list" :key="item.id">
+             <slot :info="item">{{item.name}}</slot>
+         </li>
+         </ul>
+          </div>
+        `,
+    });
+
+
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            list: [{
+                "id": 1,
+                name: 'apple'
+            }, {
+                "id": 2,
+                name: 'orange'
+            }, {
+                "id": 3,
+                name: 'banana'
+            }]
+        },
+        methods: {
+            handle: function () {
+
+            }
+        }
+    });
+</script>
+
+</html>

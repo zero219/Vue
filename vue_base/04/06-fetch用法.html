@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+
+<script type="text/javascript">
+    /*
+    fetch基于Promise实现,使用简单,功能强大,加强版xhr
+    */
+    fetch("/abc?id=123").then(function (data) {
+        //text是fetch 的API一部分,它返回一个Promise实例对象,用于获取后台数据
+        return data.text();
+    }).then(function(ret){//第二个then获取最终数据
+        console.log(ret);
+    });
+</script>
+
+</html>

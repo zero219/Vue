@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            数值A
+            <!-- del键触发事件 -->
+            <input type="text" v-model='A' />
+        </div>
+        <div>
+            数值B
+            <input type="text" v-model='B' />
+        </div>
+        <div>
+            <input type="button" v-on:click='handle' value='计算' />
+        </div>
+        <div>
+            计算结果:<span v-text='result'></span>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            A: '',
+            B: '',
+            result: ''
+        },
+        methods: {
+            handle: function () {
+                //实现逻辑
+                this.result = parseInt(this.A) + parseInt(this.B)
+            }
+        }
+    });
+</script>
+
+</html>

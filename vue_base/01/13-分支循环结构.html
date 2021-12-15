@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <!-- if-else分支：是否渲染页面 -->
+        <div v-if='score>=90'>优秀</div>
+        <div v-else-if='score<90&&score>=80'>良好</div>
+        <div v-else-if='score<80&&score>=60'>一般</div>
+        <div v-else='score<60'>差</div>
+        <!-- v-show:原理就是display:none隐藏页面 -->
+        <div v-show='flag'>v-show</div>
+        <button v-on:click='handle'>现形</button>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            score: 55,
+            flag: false
+        },
+        methods: {
+            handle: function (event) {
+                this.flag = true
+            }
+        }
+    });
+</script>
+
+</html>

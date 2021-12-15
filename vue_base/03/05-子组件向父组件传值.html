@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div :style="{fontSize: fontSize+ 'px'}">{{pmsg}}</div>
+        <!--注:加冒号就是数值，不加冒号就是字符串-->
+        <menu-item :str="pstr" :num="12" :pboo="true" :arr="parr" :obj="pobj" @enlarge-text="handle($event)"></menu-item>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+      子组件通过定义事件向父组件传递，父组件在监听子组件的事件
+      props传递数据原则：单项数据流  
+    */
+
+    Vue.component('menu-item', {
+        props: ['str', 'num', 'pboo', 'arr', 'obj'],
+        template: `
+        <div>
+        <div>{{str}}</div>
+        <div>{{num+12}}</div>
+        <div>{{typeof pboo}}</div>
+        <ul>
+        <li v-for="(item,index) in arr" :key="index">{{item}}</li>
+        </ul>
+        <div><span>{{obj.name}}</span>----<span>{{obj.sex}}</span></div>
+        <div><button @click='$emit("enlarge-text",5)'>扩大父容器字体</button></div>
+        </div>
+        `
+    });
+
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            pmsg: '父组件内容',
+            pstr: 'hello',
+            parr: ['orange', 'banana', 'apple'],
+            pobj: {
+                name: 'Tom',
+                sex: '男'
+            },
+            fontSize: 10
+        },
+        methods: {
+            handle: function (val) {
+                this.fontSize += val;
+            }
+        }
+    });
+</script>
+
+</html>

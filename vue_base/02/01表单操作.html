@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <form>
+            <div>
+                <span>姓名：</span>
+                <span><input type="text" v-model='userName'></span>
+            </div>
+            <br>
+            <div>
+                <span>性别：</span>
+                <span>
+                    <input type="radio" id='Man' value="1" v-model='Gender'>
+                    <label for="Man">男</label>
+                    <input type="radio" id='Woman' value="2" v-model='Gender'>
+                    <label for="Woman">女</label>
+                </span>
+            </div>
+            <br>
+            <div>
+                <span>爱好：</span>
+                <span>
+                    <input type="checkbox" id="Ball" value="1" v-model='Hobby'>
+                    <label for="Ball">篮球</label>
+                </span>
+                <span>
+                    <input type="checkbox" id="Sing" value="2" v-model='Hobby'>
+                    <label for="Sing">唱歌</label>
+                </span>
+                <span>
+                    <input type="checkbox" id="Code" value="3" v-model='Hobby'>
+                    <label for="Code">写代码</label>
+                </span>
+            </div>
+            <br>
+            <div>
+                <span>职业：</span>
+                <span>
+                    <select v-model='Occupation'>
+                        <option value="">请选择</option>
+                        <option value="A">职业A</option>
+                        <option value="B">职业B</option>
+                        <option value="C">职业C</option>
+                    </select>
+                </span>
+            </div>
+            <br>
+            <div>
+                <span>简介：</span>
+                <span>
+                    <textarea cols="30" rows="0" v-model='Desc'></textarea>
+                </span>
+            </div>
+            <br>
+            <div>
+                <input type="submit" value="提交" v-on:click.prevent='handle'>
+            </div>
+        </form>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            userName: 'zero',
+            Gender: 1,
+            Hobby: ['1', '2'],
+            Occupation:'A',
+            Desc:'Hellow'
+        },
+        methods: {
+            handle: function (event) {
+                console.log(this.Gender)
+                console.log(this.Hobby)
+            }
+        }
+    });
+</script>
+
+</html>

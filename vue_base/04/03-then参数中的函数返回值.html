@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript">
+    function queryData(url) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState != 4) { return; }
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    resolve(xhr.responseText);
+                } else {
+                    reject("服务器错误");
+                }
+            };
+            xhr.open('get', url);
+            xhr.send(null);
+        });
+    }
+    //调用多个ajax请求并保证顺序
+    queryData("http://1")
+        .then(function (data) {//第一次请求结果
+            console.log(data);
+            return queryData("http://2");
+        })
+        .then(function (data) {//第一次請求結果
+            console.log(data);
+            //返回Promise会调用下一个then
+            return new Promise(function (resolve, reject) {
+                setTimeout(function(){
+                    resolve(123)
+                }, 1000);
+            })
+        })
+        .then(function (data) {//获取resolve結果
+            console.log(data);
+            return "ok";//如果是普通值则传递下一个then
+        })
+        .then(function(data){
+            console.log(data);
+        });
+</script>
+
+</html>

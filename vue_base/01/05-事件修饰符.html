@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <div>{{num}}</div>
+        <!--阻止冒泡 -->
+        <div v-on:click='handle'>
+            <button v-on:click='handle1'>点击1</button>
+        </div>
+        <div v-on:click='handle'>
+            <!-- 阻止冒泡简写(修饰符) -->
+            <button v-on:click.stop='handle2'>点击2</button>
+        </div>
+
+        <div>
+            <a href="http://www.baidu.com" v-on:click='handle3'>百度</a>
+        </div>
+        <div>
+            <!-- 修饰符,阻止行为 -->
+            <a href="http://www.baidu.com" v-on:click.prevent='handle2'>百度1</a>
+        </div>
+        <!-- 事件修饰符也可串联 v-on:click.prevent.stop,请注意顺序-->
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            num: 0
+        },
+        methods: {
+            handle: function () {
+                this.num++;
+            },
+            handle1: function (event) {
+                //阻止冒泡
+                event.stopPropagation();
+            },
+            handle2: function (event) {
+
+            },
+            handle3: function (event) {
+                //阻止默认行为
+                event.preventDefault();
+            }
+        }
+    });
+</script>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../js/axios.js"></script>
+<script type="text/javascript">
+    /*
+    请求拦截器：请求之前发送设置一些信息
+    */
+    axios.interceptors.request.use(function (ret) {
+        cosnole.log(ret.url);
+        ret.headers.mytoken = 'asafdghhjcdzfghtyt';
+        return ret;
+    }, function (err) {//错误信息
+        console.log(err)
+    });
+    /*
+       响应拦截器：
+    */
+    axios.interceptors.response.use(function (res) {
+        cosnole.log(res);
+        return res.data;
+    }, function (err) {//错误信息
+        console.log(err)
+    });
+    axios.get('http://abc/1').then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+</script>
+
+</html>

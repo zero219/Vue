@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <test-tom></test-tom>
+        <test-jerry></test-jerry>
+        <br />
+        <button @click='handle'>销毁事件</button>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+      非父子组件传值
+    */
+    
+    //管理组件之间通信
+    var hub = new Vue();
+    Vue.component('test-tom', {
+        data: function () {
+            return {
+                num: 0
+            }
+        },
+        template: `
+           <div>
+           <div>Tom:{{num}}</div>
+           <div><button @click='handle'>点击</button></div>
+           </div>
+        `,
+        methods: {
+            handle: function () {
+                hub.$emit('jerry-event', 1);
+            }
+        },
+        //该函数触发说明模板已就绪
+        mounted: function () {
+            //监听事件
+            hub.$on('tom-event', (val) => {
+                this.num += val;
+            })
+        }
+    });
+
+    Vue.component('test-jerry', {
+        data: function () {
+            return {
+                num: 0
+            }
+        },
+        template: `
+           <div>
+           <div>Jerry:{{num}}</div>
+           <div><button @click='handle'>点击</button></div>
+           </div>
+        `,
+        methods: {
+            handle: function () {
+                //触发兄弟组件的调用
+                hub.$emit('tom-event', 1);
+            }
+        },
+        //该函数触发说明模板已就绪
+        mounted: function () {
+            //监听事件
+            hub.$on('jerry-event', (val) => {
+                this.num += val;
+            })
+        }
+    });
+
+
+    var vm = new Vue({
+        el: '#app',
+        data: {
+        },
+        methods: {
+            handle: function () {
+                //销毁事件
+                hub.$off('tom-event');
+                hub.$off('jerry-event');
+            }
+        }
+    });
+</script>
+
+</html>

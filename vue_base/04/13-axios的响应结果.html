@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+
+</body>
+<script type="text/javascript" src="../js/axios.js"></script>
+<script type="text/javascript">
+    /*
+     响应结果的主要属性：
+       data:返回数据
+       headers:响应头信息
+       status:响应状态
+       statusText:响应状态信息
+    */
+    //1.配置url 
+    axios.defaults.baseURL = '/abc/';
+    //2.超时时间 
+    axios.defaults.timeout = 3000;
+    //3.设置请求投 
+    axios.defaults.headers['mytoken'] = 'wegfhghjgjhloutebjjdazvn';
+    //参数接着url后面
+    axios.get('123').then(function (ret) {
+        //data固定用法,获取后台数据
+        console.log(ret.data);
+    });
+</script>
+
+</html>

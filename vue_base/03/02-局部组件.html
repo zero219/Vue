@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <div id="app">
+        <hello-word></hello-word>
+        <hello-tom></hello-tom>
+        <hello-jerry></hello-jerry>
+        <my-component></my-component>
+    </div>
+</body>
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    /*
+     局部组件注册:局部组件只能在注册它的父组件中使用
+    */
+    //错误用法：
+    Vue.component('my-component', {
+        data: function () {
+            return {
+                msg: 'hello'
+            }
+        },
+        template: '<div><hello-word></hello-word></div>'
+    });
+ 
+
+
+ 
+    var HelloWord = {
+        data: function () {
+            return {
+                msg: 'HelloWord'
+            }
+        },
+        template: '<h1>{{msg}}</h1>'
+    };
+    var HelloTom = {
+        data: function () {
+            return {
+                msg: 'HelloTom'
+            }
+        },
+        template: '<h2>{{msg}}</h2>'
+    };
+    var HelloJerry = {
+        data: function () {
+            return {
+                msg: 'HelloJerry'
+            }
+        },
+        template: '<h3>{{msg}}</h3>'
+    };
+    var vm = new Vue({
+        el: '#app',
+        data: {
+
+        },
+        components: {
+            'hello-word': HelloWord,
+            'hello-tom': HelloTom,
+            'hello-jerry': HelloJerry
+        }
+    });
+</script>
+
+</html>
