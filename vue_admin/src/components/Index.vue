@@ -1,5 +1,5 @@
 <template>
-  <el-container class="home-container">
+  <el-container class="index-container">
     <!-- 头部 -->
     <el-header>
       <div>
@@ -19,13 +19,13 @@
           <i class="el-icon-menu"></i>
         </div>
         <el-menu
-          default-active="1"
           class="el-menu-vertical"
           background-color="#fff"
           text-color="#545c64"
-          active-text-color="#ffd04b"
+          active-text-color="#409EFF"
           :collapse="isCollapse"
           router
+          :default-active="activePath"
         >
           <el-submenu :index="menu.id" v-for="menu in menuList" :key="menu.id">
             <template slot="title">
@@ -110,9 +110,12 @@ export default {
         // 3.2: 'iconfont icon-baobiao',
       },
       isCollapse: false,
+      activePath: '0',
     }
   },
-  created() {},
+  created() {
+    this.activePath = this.$route.path
+  },
   methods: {
     // 登出
     logout() {
@@ -127,7 +130,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.home-container {
+.index-container {
   height: 100%;
 }
 .el-header {
