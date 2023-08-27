@@ -2,7 +2,7 @@
   <div>
     <!-- 面包屑导航区域 -->
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/index' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
     </el-breadcrumb>
@@ -19,7 +19,7 @@
       </el-row>
       <el-row :gutter="20">
         <el-col :span="24">
-          <el-table :data="tableData" style="width: 100%">
+          <el-table :data="userInfoData" style="width: 100%">
             <el-table-column label="日期" width="180">
               <template slot-scope="scope">
                 <i class="el-icon-time"></i>
@@ -172,28 +172,7 @@
 export default {
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄',
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄',
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄',
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄',
-        },
-      ],
+      userInfoData: [],
       // 编辑弹窗显示隐藏
       editDialogVisible: false,
       editForm: {},
@@ -221,7 +200,15 @@ export default {
       roleId: '',
     }
   },
+  created() {
+    this.getUserInfo()
+  },
   methods: {
+    async getUserInfo() {
+      console.log('1')
+      const res = await this.$http.get('api/users', { params: {} })
+      console.log('1', res)
+    },
     // 编辑按钮
     handleEdit(index, row) {
       console.log(index, row)

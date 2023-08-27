@@ -30,31 +30,32 @@
                 this.$destroy();
             }
         },
-        beforeCreate: function () {
-            console.log("beforeCreate");
+        // 创建阶段
+        beforeCreate() {
+            console.log("beforeCreate 响应式数据准备好之前");
         },
-        created: function () {
-            console.log("created");
+        created() {
+            console.log("created 响应式数据准备好之后");
         },
         beforeMount: function () {
-            console.log("beforeMount");
+            console.log("beforeMount 模板渲染之前");
         },
-        mounted: function () {
-            console.log("mounted");
+        mounted() {
+            console.log("mounted 模板渲染之后");
         },
         //更新
-        beforeUpdate: function () {
-            console.log("beforeUpdate");
+        beforeUpdate() {
+            console.log("beforeUpdate 数据修改了，视图还没更新");
         },
-        updated: function () {
-            console.log("updated");
+        updated() {
+            console.log("updated 数据修改了，视图已经更新");
         },
         //销毁
-        beforeDestroy: function () {
-            console.log("beforeDestroy");
+        beforeDestroy() {
+            console.log("beforeDestroy 卸载前");
         },
-        destroyed: function () {
-            console.log("destroyed");
+        destroyed() {
+            console.log("destroyed 卸载后");
         }
     });
 </script>

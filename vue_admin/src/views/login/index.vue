@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar_box">
-        <img src="../assets/logo.png" alt="" />
+        <img src="../../assets/logo.png" alt="" />
       </div>
       <!-- 登录表单区域 -->
       <el-form
@@ -81,13 +81,13 @@ export default {
       this.$refs.loginFormRef.validate(async (valid) => {
         if (!valid) return
         // const { data: res } = {}
-        const res = await this.$http.post('login', this.loginForm)
+        const res = await this.$http.post('api/auth/login', this.loginForm)
         if (res.status !== 200) return this.$message.error('登录失败!')
         this.$message.success('登录成功')
         // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
         window.sessionStorage.setItem('token', res.data)
         // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
-        this.$router.push('/index')
+        this.$router.push('/home')
       })
     },
   },

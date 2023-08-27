@@ -4,7 +4,7 @@
     <el-header>
       <div>
         <img
-          src="../assets/logo.png"
+          src="../../assets/logo.png"
           alt=""
           style="width: 60px; height: 60px"
         />
@@ -167,10 +167,10 @@ export default {
 
 // 退出按钮
 .toggle-button {
-  background-color: #409eff;
+  background-color: #eaedf1;
   font-size: 10px;
   line-height: 24px;
-  color: #fff;
+  color: #111111;
   text-align: center;
   letter-spacing: 0.2em;
   cursor: pointer;
