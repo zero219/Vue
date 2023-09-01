@@ -1,43 +1,53 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '@/views/login/index.vue'
-import Home from '@/views/home/index.vue'
-import Welcome from '@/views/welcome/index.vue'
-import User from '@/views/users/index.vue'
-import Role from '@/views/roles/index.vue'
-import Company from '@/views/company/index.vue'
-import Result from '@/views/results/401.vue'
+import { getInfo } from '../utils/storage.js'
+
+const Login = () => import('@/views/login/index.vue')
+const Home = () => import('@/views/home/index.vue')
+const Welcome = () => import('@/views/welcome/index.vue')
+const User = () => import('@/views/users/index.vue')
+const Role = () => import('@/views/roles/index.vue')
+const Company = () => import('@/views/company/index.vue')
+const Employee = () => import('@/views/employee/index.vue')
+const Result = () => import('@/views/results/401.vue')
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
+  mode: 'history',
   routes: [
-    { path: '/', redirect: '/login' },
-    { path: '/login', component: Login },
+    { path: '/', redirect: '/Login' },
+    { path: '/Login', component: Login },
     {
-      path: '/home',
+      path: '/Home',
       component: Home,
-      redirect: '/welcome',
+      redirect: '/Welcome',
       children: [
-        { path: '/welcome', component: Welcome },
-        { path: '/user', component: User },
-        { path: '/role', component: Role },
-        { path: '/company', component: Company },
-        { path: '/401', component: Result }
-      ]
-    }
-  ]
+        { path: '/Welcome', component: Welcome },
+        { path: '/Users', component: User },
+        { path: '/Roles', component: Role },
+        { path: '/Companies', component: Company },
+        { path: '/Employees', component: Employee },
+        { path: '/401', component: Result },
+      ],
+    },
+  ],
 })
 
+const authUrl = ['/Login']
 // 挂载路由导航守卫
 router.beforeEach((to, from, next) => {
   // to 将要访问的路径
   // from 代表从哪个路径跳转而来
   // next 是一个函数，表示放行
   //     next()  放行    next('/login')  强制跳转
-  if (to.path === '/login') return next()
-  const tokenStr = window.sessionStorage.getItem('token')
-  if (!tokenStr) return next('/login')
+  if (authUrl.includes(to.path)) {
+    return next()
+  }
+  const tokenStr = getInfo()
+  if (!tokenStr) {
+    return next('/Login')
+  }
   next()
 })
 

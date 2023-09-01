@@ -79,15 +79,16 @@ export default {
     },
     login() {
       this.$refs.loginFormRef.validate(async (valid) => {
-        if (!valid) return
-        // const { data: res } = {}
-        const res = await this.$http.post('api/auth/login', this.loginForm)
+        if (!valid) {
+          return
+        }
+        const res = await this.$http.post(this.api.login, this.loginForm)
         if (res.status !== 200) return this.$message.error('登录失败!')
         this.$message.success('登录成功')
-        // 1. 将登录成功之后的 token，保存到客户端的 sessionStorage 中
-        window.sessionStorage.setItem('token', res.data)
-        // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
-        this.$router.push('/home')
+        // 数据保存在vuex中
+        this.$store.commit('user/setUserInfo', res.data)
+        // 通过编程式导航跳转到后台主页，路由地址是 /home
+        this.$router.push('/Home')
       })
     },
   },

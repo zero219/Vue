@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card"> </el-card>
+  <div>sss</div>
 </template>
 
 <script>

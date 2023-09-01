@@ -60,46 +60,7 @@
 export default {
   data() {
     return {
-      menuList: [
-        {
-          id: '1',
-          name: '用户管理',
-          children: [
-            {
-              id: '1.1',
-              name: '用户列表',
-              path: '/user',
-            },
-          ],
-        },
-        {
-          id: '2',
-          name: '角色管理',
-          children: [
-            {
-              id: '2.1',
-              name: '角色列表',
-              path: '/role',
-            },
-          ],
-        },
-        {
-          id: '3',
-          name: '公司管理',
-          children: [
-            {
-              id: '3.1',
-              name: '公司列表',
-              path: '/company',
-            },
-            {
-              id: '3.2',
-              name: '员工列表',
-              path: '/employee',
-            },
-          ],
-        },
-      ],
+      menuList: [],
       iconsList: {
         1: 'el-icon-s-custom',
         // 1.1: 'el-icon-s-custom',
@@ -113,14 +74,24 @@ export default {
       activePath: '0',
     }
   },
+
   created() {
     this.activePath = this.$route.path
+    this.getMenuList()
   },
+  mounted() {},
   methods: {
+    async getMenuList() {
+      const res = await this.$http.get(this.api.menuList)
+      if (res.status !== 200) {
+        this.$router.push('/Login')
+      }
+      this.menuList = res.data
+    },
     // 登出
     logout() {
       window.sessionStorage.clear()
-      this.$router.push('/login')
+      this.$router.push('/Login')
     },
     toggleCollapse() {
       this.isCollapse = !this.isCollapse
