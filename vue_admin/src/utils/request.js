@@ -6,15 +6,15 @@ const token = localStorage.getItem('userInfo')
 // 创建一个新的axios实例
 const request = axios.create({
   baseURL: 'http://localhost:5000',
+  headers: {
+    Authorization: JSON.parse(token),
+  },
   timeout: 5000,
 })
 
 // 添加请求拦截器
 request.interceptors.request.use(
   function (config) {
-    if (token !== '') {
-      config.headers.Authorization = JSON.parse(token)
-    }
     // 在发送请求之前做些什么
     // console.log(config)
     return config
@@ -39,3 +39,5 @@ request.interceptors.response.use(
 )
 
 export default request
+
+// restFull url拼接：const apiUrl = `/users/${userId}`;

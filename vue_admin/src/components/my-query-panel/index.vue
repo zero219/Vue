@@ -1,16 +1,46 @@
 <template>
   <div>
     <el-card class="my-query-panel">
+      <!-- 查询条件表单 -->
       <el-form
         ref="queryForm"
         :model="queryForm"
+        :inline="true"
         label-width="80px"
-        :inline="isInline"
       >
-        <slot></slot>
+        <el-form-item
+          v-for="(condition, index) in queryForm.conditions"
+          :key="index"
+          :label="condition.label"
+        >
+          <el-input
+            v-if="condition.type === 'input'"
+            v-model="condition[Object.keys(condition)[2]]"
+          ></el-input>
+          <el-select
+            v-else-if="condition.type === 'select'"
+            v-model="condition[Object.keys(condition)[2]]"
+            :placeholder="`请选择${condition.label}`"
+          >
+            <el-option
+              v-for="item in condition.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <el-date-picker
+            v-else-if="condition.type === 'date'"
+            v-model="condition[Object.keys(condition)[2]]"
+            type="date"
+            placeholder="选择日期"
+          >
+          </el-date-picker>
+        </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onQuery">查询</el-button>
-          <el-button @click="resetForm('queryForm')">重置</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+          <el-button @click="reset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -27,12 +57,18 @@ export default {
   name: 'my-query-panel',
   props: {
     queryForm: {
-      Object,
-      default: {},
-    },
-    isInline: {
-      Boolean,
-      default: true,
+      conditions: {
+        type: Array,
+        default: () => {
+          return [
+            {
+              type: 'text',
+              label: '文本条件',
+              value: '',
+            },
+          ]
+        },
+      },
     },
   },
   data() {
@@ -40,10 +76,18 @@ export default {
   },
   computed: {},
   methods: {
-    onQuery() {},
-    resetForm(formName) {
-      console.log(formName)
-      // this.$refs.formName.resetFields()
+    onSubmit() {
+      // 通过 this.$parent 访问父组件实例并调用父组件方法
+      this.$parent.getDataList()
+      // console.log('子组件', this.queryForm.conditions)
+      this.$emit('queryFilter', this.queryForm.conditions)
+    },
+    reset() {
+      // 重置所有条件输入框
+      this.queryForm.conditions.forEach((condition) => {
+        console.log(condition)
+        condition[Object.keys(condition)[2]] = ''
+      })
     },
   },
 }

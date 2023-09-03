@@ -1,17 +1,9 @@
 <template>
   <div>
     <!-- 面包屑导航区域 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/Home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>公司管理</el-breadcrumb-item>
-      <el-breadcrumb-item>公司列表</el-breadcrumb-item>
-    </el-breadcrumb>
+    <my-data-breadcrumb :crumbData="crumbData"></my-data-breadcrumb>
     <!-- 查询条件 -->
-    <my-query-panel :queryForm="queryForm">
-      <el-form-item label="审批人" prop="person">
-        <el-input v-model="queryForm.person" placeholder="审批人"></el-input>
-      </el-form-item>
-    </my-query-panel>
+    <my-query-panel :queryForm="queryForm"></my-query-panel>
     <!-- 表格列表 -->
     <my-query-result>
       <my-data-table
@@ -37,19 +29,65 @@
 </template>
 
 <script>
-import { MyQueryPanel, MyQueryResult, MyDataTable } from '../../components'
+import {
+  MyDataBreadcrumb,
+  MyQueryPanel,
+  MyQueryResult,
+  MyDataTable,
+} from '../../components'
 export default {
   name: 'company',
   components: {
+    MyDataBreadcrumb,
     MyQueryPanel,
     MyQueryResult,
     MyDataTable,
   },
   data() {
     return {
-      queryEvent: 'company-change',
+      // 面包屑
+      crumbData: {
+        toPath: '/Home',
+        toPathName: '首页',
+        menuParent: '公司管理',
+        menuVal: '公司列表',
+      },
+      // 查询条件
       queryForm: {
-        person: '',
+        conditions: [
+          {
+            type: 'input',
+            label: '文本条件',
+            value: '',
+          },
+          {
+            type: 'select',
+            label: '下拉框',
+            value: '',
+            options: [
+              {
+                value: '选项1',
+                label: '黄金糕',
+              },
+              {
+                value: '选项2',
+                label: '双皮奶',
+              },
+              {
+                value: '选项3',
+                label: '蚵仔煎',
+              },
+              {
+                value: '选项4',
+                label: '龙须面',
+              },
+              {
+                value: '选项5',
+                label: '北京烤鸭',
+              },
+            ],
+          },
+        ],
       },
       tableTitle: '公司列表',
       tableHeaderButtons: [

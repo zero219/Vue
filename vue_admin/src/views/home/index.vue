@@ -27,7 +27,11 @@
           router
           :default-active="activePath"
         >
-          <el-submenu :index="menu.id" v-for="menu in menuList" :key="menu.id">
+          <el-submenu
+            :index="menu.id.toString()"
+            v-for="menu in menuList"
+            :key="menu.id"
+          >
             <template slot="title">
               <i :class="iconsList[menu.id]"></i>
               <span>{{ menu.name }}</span>
@@ -74,7 +78,6 @@ export default {
       activePath: '0',
     }
   },
-
   created() {
     this.activePath = this.$route.path
     this.getMenuList()
@@ -82,7 +85,12 @@ export default {
   mounted() {},
   methods: {
     async getMenuList() {
-      const res = await this.$http.get(this.api.menuList)
+      const token = JSON.parse(localStorage.getItem('userInfo'))
+      const res = await this.$http.get(this.api.menuList, {
+        headers: {
+          Authorization: token,
+        },
+      })
       if (res.status !== 200) {
         this.$router.push('/Login')
       }
