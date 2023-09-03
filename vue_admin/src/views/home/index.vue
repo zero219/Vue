@@ -85,12 +85,8 @@ export default {
   mounted() {},
   methods: {
     async getMenuList() {
-      const token = JSON.parse(localStorage.getItem('userInfo'))
-      const res = await this.$http.get(this.api.menuList, {
-        headers: {
-          Authorization: token,
-        },
-      })
+      // const token = JSON.parse(localStorage.getItem('userInfo'))
+      const res = await this.$http.get(this.api.menuList)
       if (res.status !== 200) {
         this.$router.push('/Login')
       }

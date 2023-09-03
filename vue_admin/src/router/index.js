@@ -9,7 +9,7 @@ const User = () => import('@/views/users/index.vue')
 const Role = () => import('@/views/roles/index.vue')
 const Company = () => import('@/views/company/index.vue')
 const Employee = () => import('@/views/employee/index.vue')
-const Result = () => import('@/views/results/401.vue')
+const Results = () => import('@/views/results/index.vue')
 
 Vue.use(VueRouter)
 
@@ -28,7 +28,7 @@ const router = new VueRouter({
         { path: '/Roles', component: Role },
         { path: '/Companies', component: Company },
         { path: '/Employees', component: Employee },
-        { path: '/401', component: Result },
+        { path: '/Results', component: Results },
       ],
     },
   ],

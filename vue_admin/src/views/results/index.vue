@@ -17,7 +17,7 @@ export default {
   },
   methods: {
     returnHandle() {
-      this.$router.push('/index')
+      this.$router.push('/Home')
     },
   },
 }
