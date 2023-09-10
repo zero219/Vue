@@ -44,7 +44,7 @@ router.beforeEach((to, from, next) => {
   if (authUrl.includes(to.path)) {
     return next()
   }
-  const tokenStr = getInfo()
+  const tokenStr = getInfo('userInfo')
   if (!tokenStr) {
     return next('/Login')
   }

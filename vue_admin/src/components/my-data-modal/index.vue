@@ -135,7 +135,7 @@ export default {
       return `${parseInt(this.modalHeight) - 120}px`
     },
     modalHeight() {
-      return `${document.documentElement.clientHeight * 0.9}px`
+      return `${document.documentElement.clientHeight * 0.5}px`
     },
     modalClass() {
       return `${this.scrollable ? 'modal-scroll' : ''} ${this.customClass}`

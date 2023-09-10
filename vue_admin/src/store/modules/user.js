@@ -4,13 +4,13 @@ export default {
   namespaced: true,
   state () {
     return {
-      userInfo: getInfo()
+      userInfo: getInfo('userInfo')
     }
   },
   mutations: {
     setUserInfo (state, obj) {
       state.userInfo = obj
-      setInfo(obj)
+      setInfo('userInfo', obj)
     }
   },
   actions: {},

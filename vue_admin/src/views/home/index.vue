@@ -61,18 +61,15 @@
 </template>
 
 <script>
+import { removeInfo } from '../../utils/storage'
 export default {
   data() {
     return {
       menuList: [],
       iconsList: {
         1: 'el-icon-s-custom',
-        // 1.1: 'el-icon-s-custom',
         2: 'el-icon-s-claim',
-        // 2.1: 'el-icon-s-claim',
         3: 'el-icon-s-platform',
-        // 3.1: 'iconfont icon-danju',
-        // 3.2: 'iconfont icon-baobiao',
       },
       isCollapse: false,
       activePath: '0',
@@ -85,7 +82,6 @@ export default {
   mounted() {},
   methods: {
     async getMenuList() {
-      // const token = JSON.parse(localStorage.getItem('userInfo'))
       const res = await this.$http.get(this.api.menuList)
       if (res.status !== 200) {
         this.$router.push('/Login')
@@ -94,7 +90,7 @@ export default {
     },
     // 登出
     logout() {
-      window.sessionStorage.clear()
+      removeInfo('userInfo')
       this.$router.push('/Login')
     },
     toggleCollapse() {

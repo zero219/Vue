@@ -1,6 +1,6 @@
 <template>
   <my-data-modal
-    ref="modal"
+    ref="dataModal"
     :title="modalTitle"
     :loading="loading"
     width="550px"
@@ -52,7 +52,10 @@ export default {
         this.modalTitle = this.title
         this.modalMessage = this.message
       }
-      this.$refs.modal.show()
+      this.$refs.dataModal.show()
+    },
+    hide() {
+      this.$refs.dataModal.hide()
     },
   },
   components: {

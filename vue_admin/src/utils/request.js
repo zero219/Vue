@@ -1,6 +1,7 @@
 /* 封装axios用于发送请求 */
 import axios from 'axios'
 import router from '../router'
+import { getInfo } from './storage'
 
 // 创建一个新的axios实例
 const request = axios.create({
@@ -15,9 +16,9 @@ const request = axios.create({
 request.interceptors.request.use(
   function (config) {
     // 在发送请求之前做些什么
-    const token = localStorage.getItem('userInfo')
+    const token = getInfo('userInfo')
     if (token) {
-      config.headers.Authorization = JSON.parse(token)
+      config.headers.Authorization = token
     }
     // console.log(config)
     return config
@@ -32,7 +33,6 @@ request.interceptors.request.use(
 request.interceptors.response.use(
   function (response) {
     // 对响应数据做点什么
-    // console.log('response', response)
     return response
   },
   function (error) {
