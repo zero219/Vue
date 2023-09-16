@@ -1,7 +1,7 @@
 /* 封装axios用于发送请求 */
 import axios from 'axios'
 import router from '../router'
-import { getInfo } from './storage'
+import { getInfo, removeInfo } from './storage'
 
 // 创建一个新的axios实例
 const request = axios.create({
@@ -24,6 +24,7 @@ request.interceptors.request.use(
     return config
   },
   function (error) {
+    // console.log('请求拦截器', error)
     // 对请求错误做些什么
     return Promise.reject(error)
   }
@@ -39,7 +40,11 @@ request.interceptors.response.use(
     if (error.response && error.response.status === 401) {
       router.push('/Results')
     }
+    if (error.message === 'Network Error') {
+      removeInfo('userInfo')
+    }
     // 对响应错误做点什么
+    // console.log('响应拦截器', error.message)
     return Promise.reject(error)
   }
 )

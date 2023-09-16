@@ -77,15 +77,14 @@ export default {
   computed: {},
   methods: {
     onSubmit() {
-      // 通过 this.$parent 访问父组件实例并调用父组件方法
-      this.$parent.getDataList()
       // console.log('子组件', this.queryForm.conditions)
       this.$emit('queryFilter', this.queryForm.conditions)
+      // 通过 this.$parent 访问父组件实例并调用父组件方法
+      this.$parent.getDataList()
     },
     reset() {
       // 重置所有条件输入框
       this.queryForm.conditions.forEach((condition) => {
-        console.log(condition)
         condition[Object.keys(condition)[2]] = ''
       })
     },

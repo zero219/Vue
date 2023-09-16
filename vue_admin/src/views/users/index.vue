@@ -92,37 +92,27 @@
       @confirm="confirmDataItem"
     ></my-confirm-modal>
     <!-- 分配角色 -->
-    <my-data-modal
-      ref="rolesDataModal"
-      title="角色"
-      size="md"
-      @ok="saveUser('userForm')"
-      @reset="resetForm('userForm')"
-    >
+    <my-data-modal ref="rolesDataModal" title="角色" size="md" @ok="saveRoles">
       <template slot="body">
         <el-tree
+          ref="treeRoles"
           :data="treeDataRoles"
-          @check-change="assigningRolesChange"
           show-checkbox
           default-expand-all
+          node-key="id"
         >
         </el-tree>
       </template>
     </my-data-modal>
     <!-- 分配权限 -->
-    <my-data-modal
-      ref="claimDataModal"
-      title="权限"
-      size="md"
-      @ok="saveUser('userForm')"
-      @reset="resetForm('userForm')"
-    >
+    <my-data-modal ref="claimDataModal" title="权限" size="md" @ok="saveClaims">
       <template slot="body">
         <el-tree
+          ref="treeClaims"
           :data="treeDataClaims"
-          @check-change="assignClaimsChange"
           show-checkbox
           default-expand-all
+          node-key="id"
         >
         </el-tree>
       </template>
@@ -222,36 +212,6 @@ export default {
       isPwd: true,
       treeDataRoles: [],
       treeDataClaims: [],
-      treeData: [
-        {
-          id: 1,
-          label: '一级 1',
-          children: [
-            {
-              id: 1,
-              label: '一级 1-1',
-            },
-            {
-              id: 2,
-              label: '一级 1-2',
-            },
-          ],
-        },
-        {
-          id: 2,
-          label: '二级 1',
-          children: [
-            {
-              id: 1,
-              label: '二级 2-1',
-            },
-            {
-              id: 2,
-              label: '二级 2-2',
-            },
-          ],
-        },
-      ],
     }
   },
   created() {
@@ -370,7 +330,7 @@ export default {
       } else {
         modal && modal.hide()
         this.$http
-          .delete(this.api.users + '/' + this.confirmItem.id)
+          .delete(this.api.usersId.replace('{userId}', this.confirmItem.id))
           .then((res) => {
             if (res.status === 204) {
               this.$message.success('操作成功')
@@ -388,9 +348,31 @@ export default {
     },
     // 分配角色
     assigningRoles(index) {
+      this.userRolesId = index
       this.$refs.rolesDataModal.show()
+      this.$http
+        .get(this.api.usersRoles.replace('{userId}', index))
+        .then((res) => {
+          if (res.status === 200) {
+            this.$refs.treeRoles.setCheckedNodes(res.data)
+          }
+        })
     },
-    assigningRolesChange(data, checked, indeterminate) {},
+    // 保存角色
+    saveRoles() {
+      const rolesNodes = this.$refs.treeRoles.getCheckedNodes(true, false)
+      const params = {
+        roles: rolesNodes,
+      }
+      this.$http
+        .post(this.api.usersRoles.replace('{userId}', this.userRolesId), params)
+        .then((res) => {
+          if (res.status === 201) {
+            this.$message.success('操作成功')
+            this.$refs.rolesDataModal.hide()
+          }
+        })
+    },
     // 加载权限
     getClaimList() {
       this.$http.get(this.api.claimsTree).then((res) => {
@@ -401,9 +383,32 @@ export default {
     },
     // 分配权限
     assignClaims(index) {
+      this.userClaimsId = index
       this.$refs.claimDataModal.show()
+      this.$http
+        .get(this.api.usersClaims.replace('{userId}', index))
+        .then((res) => {
+          this.$refs.treeClaims.setCheckedNodes(res.data)
+        })
     },
-    assignClaimsChange(data, checked, indeterminate) {},
+    // 保存权限
+    saveClaims() {
+      const claimsNodes = this.$refs.treeClaims.getCheckedNodes(true, false)
+      const params = {
+        claims: claimsNodes,
+      }
+      this.$http
+        .post(
+          this.api.usersClaims.replace('{userId}', this.userClaimsId),
+          params
+        )
+        .then((res) => {
+          if (res.status === 201) {
+            this.$message.success('操作成功')
+            this.$refs.claimDataModal.hide()
+          }
+        })
+    },
   },
 }
 </script>
