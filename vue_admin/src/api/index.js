@@ -8,6 +8,8 @@ const api = {
   usersRoles: 'api/users/{userId}/roles', // 用户角色
   usersClaims: 'api/users/{userId}/claims', // 用户权限
   roles: 'api/roles', // 角色
+  rolesId: 'api/roles/{roleId}', // 角色Id
+  roleClaims: 'api/roles/{roleId}/claims', // 角色权限
   rolesTree: 'api/rolesTree', // 角色树
   claimsTree: 'api/claimsTree', // 权限树
 }

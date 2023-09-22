@@ -340,6 +340,7 @@ export default {
     },
     // 加载角色
     getRolesList() {
+      this.treeDataRoles = []
       this.$http.get(this.api.rolesTree).then((res) => {
         if (res.status === 200) {
           this.treeDataRoles = res.data
@@ -375,6 +376,7 @@ export default {
     },
     // 加载权限
     getClaimList() {
+      this.treeDataClaims = []
       this.$http.get(this.api.claimsTree).then((res) => {
         if (res.status === 200) {
           this.treeDataClaims = res.data

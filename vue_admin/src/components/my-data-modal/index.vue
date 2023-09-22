@@ -111,7 +111,8 @@ export default {
   data: () => ({
     showModal: false,
     modalSizes: [
-      { size: 'sm', value: '300px' },
+      { size: 'xm', value: '300px' },
+      { size: 'sm', value: '400px' },
       { size: 'md', value: '600px', default: true },
       { size: 'lg', value: '900px' },
       { size: 'xl', value: '1200px' },
