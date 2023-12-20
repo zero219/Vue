@@ -1,6 +1,7 @@
 // webapi地址
 const api = {
   login: '/api/auth/login',
+  refresh: '/api/auth/refresh', // 刷新token
   menuList: '/api/auth/menuList', // 权限列表
   users: 'api/users', // 所有用户
   usersId: 'api/users/{userId}', // 用户id

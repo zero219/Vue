@@ -1,10 +1,12 @@
 /* 封装axios用于发送请求 */
 import axios from 'axios'
 import router from '../router'
-import { getInfo } from './storage'
+import { MessageBox } from 'element-ui'
+import { getInfo, setInfo } from './storage'
+import { refreshToken, isRefreshTokenRequest } from './refreshToken'
 
 // 创建一个新的axios实例
-const request = axios.create({
+const instance = axios.create({
   baseURL: 'http://localhost:5000',
   headers: {
     'Content-Type': 'application/json', // 设置请求头
@@ -13,53 +15,107 @@ const request = axios.create({
 })
 
 // 添加请求拦截器
-request.interceptors.request.use(
-  function (config) {
+instance.interceptors.request.use(
+  (config) => {
     // 在发送请求之前做些什么
-    const token = getInfo('userInfo')
+    const token = getInfo('token')
+    const refreshToken = getInfo('refreshToken')
     if (token) {
-      config.headers.Authorization = token
+      config.headers.Authorization = `Bearer ${token}`
+    }
+    if (refreshToken) {
+      config.headers.RefreshToken = refreshToken
     }
     return config
   },
-  function (error) {
+  (error) => {
     // 对请求错误做些什么
     return Promise.reject(error)
   }
 )
 
 // 添加响应拦截器
-request.interceptors.response.use(
-  function (response) {
-    // 对响应数据做点什么
-    return response
+instance.interceptors.response.use(
+  // 响应
+  async (res) => {
+    // 对响应之前做点什么
+    return res
   },
-  function (error) {
-    if (error.response && error.response.status === 401) {
-      router.push({ name: 'Results', params: { msg: '抱歉,您暂时没有权限' } })
-    } else if (error.response && error.response.status === 500) {
-      router.push({
-        name: 'Results',
-        params: { msg: '服务器发生错误，请稍后重试' },
+  // 异常
+  async (error) => {
+    let isRefresh = false
+    if (error.response && error.response.status === 400) {
+      MessageBox.confirm(error, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
       })
+        .then(() => {
+          console.log('确定')
+        })
+        .catch(() => {
+          console.log('取消')
+        })
+    } else if (
+      error.response &&
+      error.response.status === 401 &&
+      !isRefreshTokenRequest(error.config)
+    ) {
+      if (!isRefresh) {
+        isRefresh = true
+        try {
+          // 刷新token
+          const result = await refreshToken()
+          // 请求成功后
+          if (result.status === 200) {
+            setInfo('token', result.data.accessToken)
+            setInfo('refreshToken', result.data.refreshToken)
+            // 重新请求
+            return instance(error.config)
+          }
+        } catch (error) {
+          localStorage.clear()
+          router.push('/Login')
+        }
+        isRefresh = false
+      }
+    } else if (error.response && error.response.status === 403) {
+      MessageBox.confirm(error, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          console.log('确定')
+        })
+        .catch(() => {
+          console.log('取消')
+        })
+    } else if (error.response && error.response.status === 500) {
+      MessageBox.confirm(error, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          console.log('确定')
+        })
+        .catch(() => {
+          console.log('取消')
+        })
     } else if (error.request) {
       // 请求发送失败，没有收到响应
-      router.push({
-        name: 'Results',
-        params: { msg: '请求发送失败，请检查您的网络连接或稍后重试' },
-      })
+      console.error('未发送请求：', error.message)
     } else {
       // 其他错误
-      router.push({
-        name: 'Results',
-        params: { msg: '发生错误：' + error.message },
-      })
+      console.error('其他错误：', error.message)
     }
+
     // 对响应错误做点什么
     return Promise.reject(error)
   }
 )
 
-export default request
+export default instance
 
 // restFull url拼接：const apiUrl = `/users/${userId}`;

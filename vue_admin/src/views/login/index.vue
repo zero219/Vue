@@ -39,6 +39,8 @@
 </template>
 
 <script>
+import { setInfo } from '../../utils/storage'
+
 export default {
   data() {
     return {
@@ -85,8 +87,11 @@ export default {
         const res = await this.$http.post(this.api.login, this.loginForm)
         if (res.status !== 200) return this.$message.error('登录失败!')
         this.$message.success('登录成功')
+        // 保存在缓存中
+        setInfo('token', res.data.accessToken)
+        setInfo('refreshToken', res.data.refreshToken)
         // 数据保存在vuex中
-        this.$store.commit('user/setUserInfo', res.data)
+        this.$store.commit('user/setUserInfo', this.loginForm.userName)
         // 通过编程式导航跳转到后台主页，路由地址是 /home
         this.$router.push('/Home')
       })

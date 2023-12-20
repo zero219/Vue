@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import { removeInfo } from '../../utils/storage'
 export default {
   data() {
     return {
@@ -90,7 +89,7 @@ export default {
     },
     // 登出
     logout() {
-      removeInfo('userInfo')
+      localStorage.clear()
       this.$router.push('/Login')
     },
     toggleCollapse() {
